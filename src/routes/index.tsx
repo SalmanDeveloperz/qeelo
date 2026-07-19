@@ -123,7 +123,7 @@ function Hero() {
   const y = useTransform(scrollY, [0, 600], [0, 80]);
   const rotate = useTransform(scrollY, [0, 600], [0, -6]);
   return (
-    <section className="relative min-h-[92vh] overflow-hidden">
+    <section className="relative min-h-[82vh] lg:min-h-[88vh] overflow-hidden">
       {/* dotted trail decoration */}
       <svg
         className="absolute left-1/3 top-1/2 -translate-y-1/2 w-[60%] h-[60%] pointer-events-none opacity-90"
@@ -147,7 +147,7 @@ function Hero() {
         </defs>
       </svg>
 
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-16 md:pt-20 pb-20 grid lg:grid-cols-[1.05fr_1fr] gap-10 items-center">
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-8 md:pt-10 pb-10 lg:pb-12 grid lg:grid-cols-[0.95fr_0.9fr] gap-4 lg:gap-6 xl:gap-8 items-center">
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -157,7 +157,7 @@ function Hero() {
             <span className="inline-block text-sunny font-script text-2xl md:text-3xl mb-4">
               Hello, sweet friend
             </span>
-            <h1 className="font-display text-cream leading-[1.05] tracking-tight text-[56px] sm:text-[72px] md:text-[96px] lg:text-[112px]">
+            <h1 className="font-display text-cream leading-[0.95] tracking-tight text-[40px] sm:text-[50px] md:text-[64px] lg:text-[76px] xl:text-[84px]">
               ICE CREAM
               <br />
               MADE WITH
@@ -170,7 +170,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
+            className="mt-8 md:mt-10 flex flex-wrap items-center gap-4"
           >
             <a
               href="#flavors"
@@ -193,7 +193,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-[260px] sm:w-[300px] h-[360px] sm:h-[420px] drop-shadow-[0_30px_45px_rgba(0,0,0,0.35)]">
+            <div className="relative w-[240px] sm:w-[280px] h-[320px] sm:h-[380px] drop-shadow-[0_30px_45px_rgba(0,0,0,0.35)]">
 
               <motion.img
                 src={coneOnly}
@@ -237,7 +237,7 @@ function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-6 lg:mt-14 flex items-center gap-6 max-w-lg"
+            className="mt-5 lg:mt-10 flex items-center gap-6 max-w-lg"
           >
 
             <div className="relative shrink-0">
@@ -260,10 +260,10 @@ function Hero() {
         {/* Hero cone with falling scoops */}
         <motion.div
           style={{ y, rotate }}
-          className="hidden lg:flex relative justify-center lg:justify-end"
+          className="hidden lg:flex relative justify-center lg:justify-end self-center lg:-mt-3"
         >
 
-          <div className="relative w-[300px] sm:w-[420px] md:w-[480px] lg:w-[540px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.35)]">
+          <div className="relative w-[250px] sm:w-[300px] md:w-[340px] lg:w-[360px] xl:w-[400px] h-[300px] sm:h-[400px] md:h-[460px] lg:h-[500px] xl:h-[540px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.35)]">
             {/* Cone */}
             <motion.img
               src={coneOnly}
@@ -336,16 +336,16 @@ function HandShaker({ delay = 2, scale = 1 }: { delay?: number; scale?: number }
       aria-hidden
       className="absolute z-50 pointer-events-none select-none drop-shadow-[0_18px_25px_rgba(0,0,0,0.35)]"
       style={{
-        width: `${46 * scale}%`,
-        top: "-22%",
-        left: "50%",
+        width: `${34 * scale}%`,
+        top: "-10%",
+        left: "56%",
         transformOrigin: "92% 8%",
       }}
-      initial={{ x: 120, y: -260, rotate: -60, opacity: 0 }}
+      initial={{ x: 100, y: -180, rotate: -48, opacity: 0 }}
       animate={{
-        x: [120, 10, 10, 10, 10, 10, 120],
-        y: [-260, -10, -10, -10, -10, -10, -260],
-        rotate: [-60, -22, -12, -26, -14, -20, -60],
+        x: [100, 8, 8, 8, 8, 8, 100],
+        y: [-180, -8, -8, -8, -8, -8, -180],
+        rotate: [-48, -16, -8, -14, -8, -12, -48],
         opacity: [0, 1, 1, 1, 1, 1, 0],
       }}
       transition={{
