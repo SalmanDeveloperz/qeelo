@@ -52,7 +52,8 @@ const FLAVORS = [
 
 function HomePage() {
   return (
-    <div id="home" className="min-h-screen bg-sage text-cream font-sans overflow-x-hidden">
+    <div id="home" className="relative min-h-screen bg-transparent text-cream font-sans overflow-x-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(255,107,107,0.16),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(184,161,255,0.16),transparent_30%)]" />
       <Navbar />
       <Hero />
       <Marquee />
@@ -68,7 +69,7 @@ function HomePage() {
 function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 bg-sage/90 backdrop-blur-md border-b border-cream/10">
+    <header className="sticky top-0 z-50 border-b border-cream/10 bg-sage/70 backdrop-blur-xl">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-24 md:h-28 flex items-center justify-between">
         <a
           href="#home"
@@ -85,7 +86,7 @@ function Navbar() {
             <a
               key={n.href}
               href={n.href}
-              className="text-cream/95 font-medium text-[15px] hover:text-sunny transition-colors"
+              className="text-cream/95 font-semibold text-[15px] hover:text-sunny transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-sunny after:transition-all after:duration-300 hover:after:w-full"
             >
               {n.label}
             </a>
@@ -93,7 +94,7 @@ function Navbar() {
         </nav>
         <a
           href="#flavors"
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-sunny text-ink font-bold px-6 py-3 hover:scale-105 transition-transform shadow-lift"
+          className="hidden md:inline-flex items-center gap-2 rounded-full bg-sunny text-ink font-bold px-6 py-3 hover:scale-105 hover:shadow-[0_0_0_4px_rgba(255,209,102,0.28)] transition-all shadow-lift"
         >
           Order now <ArrowRight className="h-4 w-4" />
         </a>
@@ -154,10 +155,10 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="inline-block text-sunny font-script text-2xl md:text-3xl mb-4">
+            <span className="inline-block text-sunny font-script text-2xl md:text-3xl mb-4 px-3 py-1 rounded-full border border-sunny/30 bg-sunny/10 backdrop-blur">
               Hello, sweet friend
             </span>
-            <h1 className="font-display text-cream leading-[0.95] tracking-tight text-[40px] sm:text-[50px] md:text-[64px] lg:text-[76px] xl:text-[84px]">
+            <h1 className="font-display text-cream leading-[0.95] tracking-[-0.04em] text-[40px] sm:text-[50px] md:text-[64px] lg:text-[76px] xl:text-[84px] drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
               ICE CREAM
               <br />
               MADE WITH
@@ -174,7 +175,7 @@ function Hero() {
           >
             <a
               href="#flavors"
-              className="rounded-full border-2 border-sunny text-cream font-bold px-8 py-4 hover:bg-sunny hover:text-ink transition-colors"
+              className="rounded-full border-2 border-sunny text-cream font-bold px-8 py-4 hover:bg-sunny hover:text-ink transition-all duration-300 hover:scale-[1.02]"
             >
               Our flavors
             </a>
@@ -237,7 +238,7 @@ function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-5 lg:mt-10 flex items-center gap-6 max-w-lg"
+            className="mt-5 lg:mt-10 flex items-center gap-6 max-w-lg rounded-[28px] border border-cream/15 bg-cream/10 p-4 backdrop-blur-md shadow-[0_15px_40px_rgba(0,0,0,0.15)]"
           >
 
             <div className="relative shrink-0">
@@ -246,7 +247,7 @@ function Hero() {
                 transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                 src={plate}
                 alt="Plate of colorful scoops"
-                className="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-cream/20 shadow-lift"
+                className="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-cream/20 shadow-lift animate-[spin_20s_linear_infinite]"
               />
             </div>
             <p className="text-cream/90 text-[15px] leading-relaxed">
@@ -493,7 +494,7 @@ function Sprinkles({ count = 80, startDelay = 0 }: { count?: number; startDelay?
 function Marquee() {
   const words = ["Fresh Daily", "Made in Lahore", "Small Batch", "Palette Ready", "Instagram Worthy", "Gen Z Approved"];
   return (
-    <div className="bg-sunny text-ink py-5 overflow-hidden border-y-4 border-sage-dark">
+    <div className="bg-[linear-gradient(90deg,#FFD166_0%,#FFB36B_100%)] text-ink py-5 overflow-hidden border-y-4 border-sage-dark shadow-[inset_0_-12px_24px_rgba(0,0,0,0.08)]">
       <div className="flex gap-16 whitespace-nowrap animate-[marquee_35s_linear_infinite]">
         {[...words, ...words, ...words].map((w, i) => (
           <span key={i} className="font-display text-2xl md:text-3xl uppercase tracking-wide">
@@ -507,8 +508,9 @@ function Marquee() {
 
 function Story() {
   return (
-    <section id="story" className="py-24 md:py-32 bg-sage-deep">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 items-center">
+    <section id="story" className="py-24 md:py-32 bg-[linear-gradient(135deg,rgba(47,61,35,0.95),rgba(69,91,49,0.95))] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,209,102,0.16),transparent_26%)]" />
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 items-center relative z-10">
         <div>
           <span className="font-script text-sunny text-3xl">Our story</span>
           <h2 className="font-display text-cream text-4xl md:text-6xl mt-3 leading-[1]">
@@ -536,7 +538,7 @@ function Story() {
           className="relative"
         >
           <div className="absolute -inset-6 bg-sunny/20 rounded-full blur-3xl" />
-          <img src={plate} alt="Qeelo scoops" className="relative w-full max-w-md mx-auto" />
+          <img src={plate} alt="Qeelo scoops" className="relative w-full max-w-md mx-auto rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]" />
         </motion.div>
       </div>
     </section>
@@ -545,7 +547,8 @@ function Story() {
 
 function Flavors() {
   return (
-    <section id="flavors" className="py-24 md:py-32 bg-sage">
+    <section id="flavors" className="py-24 md:py-32 bg-sage/90 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,107,107,0.14),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(184,161,255,0.14),transparent_30%)]" />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
@@ -570,14 +573,14 @@ function Flavors() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: i * 0.08, duration: 0.7 }}
-              className="group rounded-[32px] bg-cream text-ink overflow-hidden shadow-lift"
+              className="group rounded-[32px] bg-cream text-ink overflow-hidden shadow-lift border border-sage-dark/10 backdrop-blur-sm"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={f.img}
                   alt={f.name}
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
               </div>
               <div className="p-6 flex items-center justify-between">
@@ -586,7 +589,7 @@ function Flavors() {
                   <div className="text-sm text-ink/60 mt-1">{f.tag}</div>
                 </div>
                 <button
-                  className="h-12 w-12 rounded-full bg-sunny grid place-items-center hover:bg-coral hover:text-cream transition-colors"
+                  className="h-12 w-12 rounded-full bg-sunny grid place-items-center hover:bg-coral hover:text-cream transition-all duration-300 hover:rotate-12"
                   aria-label={`Order ${f.name}`}
                 >
                   <ArrowRight className="h-5 w-5" />
@@ -602,7 +605,7 @@ function Flavors() {
 
 function PaletteSection() {
   return (
-    <section id="palette" className="py-24 md:py-32 bg-sage-dark relative overflow-hidden">
+    <section id="palette" className="py-24 md:py-32 bg-[linear-gradient(135deg,#24331C_0%,#2E3E22_55%,#1A2410_100%)] relative overflow-hidden">
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-sunny/10 rounded-full blur-3xl" />
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center">
         <span className="font-script text-sunny text-3xl">Signature experience</span>
@@ -661,7 +664,7 @@ function PaletteSection() {
             ["02", "Eco disposable", "Sturdy pressed paper, easy to hold."],
             ["03", "Made to share", "Or don't. We won't tell."],
           ].map(([n, t, d]) => (
-            <div key={n} className="border-t border-sunny/40 pt-5">
+            <div key={n} className="border-t border-sunny/40 pt-5 rounded-[20px] bg-white/5 p-4">
               <div className="font-display text-sunny text-3xl">{n}</div>
               <div className="font-display text-cream text-xl mt-2">{t}</div>
               <div className="text-cream/70 mt-2 text-sm">{d}</div>
@@ -680,7 +683,8 @@ function Locations() {
     { name: "Emporium", city: "Lahore", status: "Coming soon" },
   ];
   return (
-    <section id="contact" className="py-24 md:py-32 bg-sage">
+    <section id="contact" className="py-24 md:py-32 bg-sage/90 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,209,102,0.14),transparent_24%)]" />
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <div className="text-center mb-14">
           <span className="font-script text-sunny text-3xl">Find us</span>
@@ -694,7 +698,7 @@ function Locations() {
           {spots.map((s) => (
             <div
               key={s.name}
-              className="rounded-[28px] bg-sage-deep border border-cream/10 p-8 hover:border-sunny transition-colors"
+              className="rounded-[28px] bg-sage-deep/80 border border-cream/10 p-8 hover:border-sunny hover:-translate-y-1 transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.18)]"
             >
               <MapPin className="h-8 w-8 text-sunny" />
               <div className="font-display text-cream text-2xl mt-4">{s.name}</div>
@@ -718,7 +722,8 @@ function Locations() {
 
 function Footer() {
   return (
-    <footer className="bg-sage-dark text-cream/85 pt-20 pb-10">
+    <footer className="bg-[linear-gradient(135deg,#1B2410_0%,#23321A_100%)] text-cream/85 pt-20 pb-10 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(255,209,102,0.12),transparent_30%)]" />
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10">
           <div>
