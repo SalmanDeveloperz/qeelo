@@ -9,8 +9,8 @@ import coneOnly from "@/assets/qeelo-cone-only.png";
 import scoopPink from "@/assets/qeelo-scoop-pink-only.png";
 import scoopOrange from "@/assets/qeelo-scoop-orange-only.png";
 import scoopPista from "@/assets/qeelo-scoop-pista-only.png";
-import plate from "@/assets/qeelo-plate.png";
 import handShaker from "@/assets/qeelo-hand-shaker.png";
+import paletteIcecream from "@/assets/Gemini_Generated_palette icecream.png";
 
 import pistachio from "@/assets/flavor-pistachio.jpg";
 import rose from "@/assets/flavor-rose.jpg";
@@ -155,7 +155,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="inline-block text-sunny font-script text-2xl md:text-3xl mb-4 px-3 py-1 rounded-full border border-sunny/30 bg-sunny/10 backdrop-blur">
+            <span className="inline-block text-sunny mb-4 px-3 py-1 rounded-full border border-sunny/30 bg-sunny/10 backdrop-blur" style={{ fontFamily: '"Caveat Brush", cursive', fontSize: '1.75rem', lineHeight: 1.2, letterSpacing: '0.01em' }}>
               Hello, sweet friend
             </span>
             <h1 className="font-display text-cream leading-[0.95] tracking-[-0.04em] text-[40px] sm:text-[50px] md:text-[64px] lg:text-[76px] xl:text-[84px] drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
@@ -242,13 +242,7 @@ function Hero() {
           >
 
             <div className="relative shrink-0">
-              <motion.img
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, ease: "linear", repeat: Infinity }}
-                src={plate}
-                alt="Plate of colorful scoops"
-                className="w-40 h-40 md:w-48 md:h-48 object-cover rounded-full ring-4 ring-cream/20 shadow-lift animate-[spin_20s_linear_infinite]"
-              />
+              <RotatingPalette className="w-40 h-40 md:w-48 md:h-48" />
             </div>
             <p className="text-cream/90 text-[15px] leading-relaxed">
               You can&apos;t buy happiness, but you can buy ice cream,
@@ -318,12 +312,19 @@ function Hero() {
   );
 }
 
-function StatBlock({ number, label }: { number: string; label: string }) {
+function RotatingPalette({ className = "" }: { className?: string }) {
   return (
-    <div className="text-right">
-      <div className="font-display text-sage-dark text-5xl leading-none">{number}</div>
-      <div className="text-cream/90 text-sm mt-1">{label}</div>
-    </div>
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+      className={`relative flex items-center justify-center ${className}`}
+    >
+      <img
+        src={paletteIcecream}
+        alt="Qeelo palette illustration"
+        className="w-full h-full object-contain rounded-[24px] drop-shadow-[0_20px_45px_rgba(0,0,0,0.32)]"
+      />
+    </motion.div>
   );
 }
 
@@ -538,7 +539,7 @@ function Story() {
           className="relative"
         >
           <div className="absolute -inset-6 bg-sunny/20 rounded-full blur-3xl" />
-          <img src={plate} alt="Qeelo scoops" className="relative w-full max-w-md mx-auto rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]" />
+          <RotatingPalette className="relative w-full max-w-md mx-auto rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]" />
         </motion.div>
       </div>
     </section>

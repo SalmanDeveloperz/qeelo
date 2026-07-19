@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&family=Caveat+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat+Brush&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -18,8 +18,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-script: "Caveat Brush", cursive;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -67,46 +67,46 @@
 :root {
   --radius: 1rem;
 
-  /* Fresh modern Qeelo palette — creamy, candy-bright, and upbeat */
-  --sage: #8DAF72;
-  --sage-deep: #6B8F53;
-  --sage-dark: #2C3E21;
-  --sunny: #FFD166;
-  --cream: #FFF8F0;
-  --coral: #FF6B6B;
-  --caramel: #C97B42;
-  --ink: #171B19;
-  --pink: #FF8EB3;
-  --lavender: #B8A1FF;
-  --mint: #8FD3C4;
+  /* One-color premium theme: warm amber as the signature accent */
+  --sage: #111511;
+  --sage-deep: #1B241A;
+  --sage-dark: #040604;
+  --sunny: #FFB703;
+  --cream: #FFF7EB;
+  --coral: #FFB703;
+  --caramel: #FFB703;
+  --ink: #040503;
+  --pink: #FFB703;
+  --lavender: #FFB703;
+  --mint: #FFB703;
 
-  --background: #8DAF72;
-  --foreground: #FFF8F0;
-  --card: rgba(255, 248, 240, 0.94);
-  --card-foreground: #171B19;
-  --popover: rgba(255, 248, 240, 0.96);
-  --popover-foreground: #171B19;
-  --primary: #FFD166;
-  --primary-foreground: #171B19;
-  --secondary: #FFF8F0;
-  --secondary-foreground: #171B19;
-  --muted: #6B8F53;
-  --muted-foreground: #F4F0E8;
-  --accent: #FF6B6B;
-  --accent-foreground: #171B19;
+  --background: #040604;
+  --foreground: #FFF7EB;
+  --card: rgba(255, 247, 235, 0.96);
+  --card-foreground: #040503;
+  --popover: rgba(255, 247, 235, 0.96);
+  --popover-foreground: #040503;
+  --primary: #FFB703;
+  --primary-foreground: #040503;
+  --secondary: #FFF7EB;
+  --secondary-foreground: #040503;
+  --muted: #1B241A;
+  --muted-foreground: #F8EEE0;
+  --accent: #FFB703;
+  --accent-foreground: #040503;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: rgba(255, 248, 240, 0.18);
-  --input: rgba(255, 248, 240, 0.16);
-  --ring: #FFD166;
+  --border: rgba(255, 183, 3, 0.2);
+  --input: rgba(255, 183, 3, 0.16);
+  --ring: #FFB703;
 
   /* Signature gradients & shadows */
-  --gradient-sage: linear-gradient(140deg, #A9C389 0%, #8DAF72 52%, #6B8F53 100%);
-  --gradient-mix: radial-gradient(circle at top left, rgba(255, 107, 107, 0.28) 0%, transparent 34%),
-    radial-gradient(circle at top right, rgba(184, 161, 255, 0.24) 0%, transparent 32%),
-    linear-gradient(135deg, #90B377 0%, #6B8F53 100%);
-  --shadow-soft: 0 30px 80px -30px rgba(23, 27, 25, 0.38);
-  --shadow-lift: 0 18px 40px -20px rgba(23, 27, 25, 0.34);
+  --gradient-sage: linear-gradient(135deg, #060806 0%, #12150F 55%, #1C2417 100%);
+  --gradient-mix: radial-gradient(circle at 15% 10%, rgba(255, 183, 3, 0.2) 0%, transparent 30%),
+    radial-gradient(circle at 85% 18%, rgba(255, 183, 3, 0.12) 0%, transparent 32%),
+    linear-gradient(135deg, #040604 0%, #12160F 50%, #0B0E09 100%);
+  --shadow-soft: 0 32px 70px -24px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 20px 42px -24px rgba(0, 0, 0, 0.55);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -166,11 +166,14 @@
   body {
     background: var(--gradient-mix);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     overflow-x: hidden;
+    text-rendering: optimizeLegibility;
   }
 
   body::before,
@@ -180,23 +183,23 @@
     inset: -10%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   body::before {
-    background: radial-gradient(circle at 15% 10%, rgba(255, 107, 107, 0.18), transparent 28%);
+    background: radial-gradient(circle at 15% 10%, rgba(255, 183, 3, 0.16), transparent 28%);
     animation: drift-slow 16s ease-in-out infinite;
   }
 
   body::after {
-    background: radial-gradient(circle at 85% 18%, rgba(184, 161, 255, 0.2), transparent 30%);
+    background: radial-gradient(circle at 85% 18%, rgba(255, 183, 3, 0.12), transparent 30%);
     animation: drift-slow 20s ease-in-out infinite reverse;
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-display);
+    font-family: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
     font-optical-sizing: auto;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     font-weight: 700;
   }
 }
