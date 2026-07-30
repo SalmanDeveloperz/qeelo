@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Facebook, Instagram, MapPin, Menu, Phone, Youtube, X } from "lucide-react";
 
@@ -23,7 +23,7 @@ const logo = logoAsset.url;
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Qeelo Ice Cream · Lahore" },
+      { title: "Qeelo Ice Cream Â· Lahore" },
       {
         name: "description",
         content:
@@ -49,6 +49,63 @@ const FLAVORS = [
   { name: "Chaunsa Mango", img: mango, tag: "Seasonal" },
   { name: "Madagascar Vanilla", img: vanilla, tag: "Classic" },
   { name: "Matcha Cloud", img: matcha, tag: "New" },
+];
+
+const PALETTE_STORIES = [
+  {
+    name: "Pistachio Kulfi",
+    note: "Signature",
+    image: scoopPista,
+    accent: "#BDE7B7",
+    glow: "rgba(189, 231, 183, 0.22)",
+    description:
+      "Nutty, cool, and deeply Lahore. This is the flavor that anchors the whole brand with calm confidence.",
+  },
+  {
+    name: "Gulab Rose",
+    note: "Local",
+    image: scoopPink,
+    accent: "#FF8FB1",
+    glow: "rgba(255, 143, 177, 0.24)",
+    description:
+      "Soft rose perfume, creamy body, and a gentle floral finish that feels like dessert with a memory.",
+  },
+  {
+    name: "Chaunsa Mango",
+    note: "Seasonal",
+    image: scoopOrange,
+    accent: "#FFB36B",
+    glow: "rgba(255, 179, 107, 0.24)",
+    description:
+      "Bright, sunny, and juicy â€” the kind of scoop that makes the whole page feel alive when it lands.",
+  },
+  {
+    name: "Belgian Chocolate",
+    note: "Classic",
+    image: chocolate,
+    accent: "#8A4E2C",
+    glow: "rgba(138, 78, 44, 0.22)",
+    description:
+      "Deep cocoa richness with a silky finish. It adds contrast, weight, and a little dramatic edge.",
+  },
+  {
+    name: "Madagascar Vanilla",
+    note: "Classic",
+    image: vanilla,
+    accent: "#FFF1D2",
+    glow: "rgba(255, 241, 210, 0.22)",
+    description:
+      "Simple done beautifully â€” warm vanilla, creamy texture, and the quiet luxury every menu needs.",
+  },
+  {
+    name: "Matcha Cloud",
+    note: "New",
+    image: matcha,
+    accent: "#C7E6B5",
+    glow: "rgba(199, 230, 181, 0.24)",
+    description:
+      "Clean, modern, and just a little unexpected. It keeps the whole collection feeling current and premium.",
+  },
 ];
 
 function HomePage() {
@@ -192,7 +249,7 @@ function Hero() {
               href="#palette"
               className="text-sunny font-semibold underline underline-offset-4 transition-colors hover:text-cream"
             >
-              See the palette →
+              See the palette â†’
             </a>
           </motion.div>
 
@@ -202,60 +259,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.8 }}
           >
-            <div className="relative h-[340px] w-[260px] drop-shadow-[0_32px_50px_rgba(0,0,0,0.36)] sm:h-[390px] sm:w-[300px]">
-              <motion.img
-                src={coneOnly}
-                alt="Empty waffle cone"
-                className="absolute bottom-0 left-1/2 z-0 w-[70%] -translate-x-1/2"
-                initial={{ y: -25, opacity: 0, scale: 0.92 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
-              />
-              <motion.img
-                src={scoopPink}
-                alt="Pink strawberry scoop"
-                className="absolute bottom-[18%] left-1/2 z-10 w-[68%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
-                initial={{ y: -320, opacity: 0, rotate: -10, scale: 0.6 }}
-                animate={{ y: 0, opacity: 1, rotate: [0, 4, -2, 0], scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 10,
-                  delay: 0.55,
-                  rotate: { duration: 3.6, delay: 1.1, repeat: Infinity, ease: "easeInOut" },
-                }}
-              />
-              <motion.img
-                src={scoopOrange}
-                alt="Orange mango scoop"
-                className="absolute bottom-[38%] left-1/2 z-20 w-[62%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
-                initial={{ y: -380, opacity: 0, rotate: 10, scale: 0.6 }}
-                animate={{ y: 0, opacity: 1, rotate: [0, -4, 2, 0], scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 10,
-                  delay: 1.0,
-                  rotate: { duration: 4, delay: 1.7, repeat: Infinity, ease: "easeInOut" },
-                }}
-              />
-              <motion.img
-                src={scoopPista}
-                alt="Green pistachio scoop"
-                className="absolute bottom-[54%] left-1/2 z-30 w-[56%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
-                initial={{ y: -440, opacity: 0, rotate: -8, scale: 0.6 }}
-                animate={{ y: 0, opacity: 1, rotate: [0, 5, -3, 0], scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 10,
-                  delay: 1.45,
-                  rotate: { duration: 4.4, delay: 2.2, repeat: Infinity, ease: "easeInOut" },
-                }}
-              />
-              <Sprinkles startDelay={2.3} count={60} />
-              <HandShaker delay={2.0} scale={0.9} />
-            </div>
+            <HeroShowpiece compact />
           </motion.div>
 
           <motion.div
@@ -274,125 +278,234 @@ function Hero() {
         </div>
 
         <motion.div style={{ y, rotate }} className="relative hidden justify-center lg:flex lg:justify-end">
-          <div className="relative h-[540px] w-[400px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.35)] xl:h-[600px] xl:w-[450px]">
-            <motion.img
-              src={coneOnly}
-              alt="Empty waffle cone"
-              className="absolute bottom-0 left-1/2 z-0 w-[70%] -translate-x-1/2"
-              initial={{ y: -40, opacity: 0, scale: 0.9 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
-            />
-            <motion.img
-              src={scoopPink}
-              alt="Pink strawberry scoop"
-              className="absolute bottom-[18%] left-1/2 z-10 w-[68%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
-              initial={{ y: -400, opacity: 0, rotate: -12, scale: 0.6 }}
-              animate={{ y: 0, opacity: 1, rotate: [0, 4, -2, 0], scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 10,
-                delay: 0.6,
-                rotate: { duration: 3.6, delay: 1.1, repeat: Infinity, ease: "easeInOut" },
-              }}
-            />
-            <motion.img
-              src={scoopOrange}
-              alt="Orange mango scoop"
-              className="absolute bottom-[38%] left-1/2 z-20 w-[62%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
-              initial={{ y: -460, opacity: 0, rotate: 10, scale: 0.6 }}
-              animate={{ y: 0, opacity: 1, rotate: [0, -4, 2, 0], scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 10,
-                delay: 1.1,
-                rotate: { duration: 4, delay: 1.8, repeat: Infinity, ease: "easeInOut" },
-              }}
-            />
-            <motion.img
-              src={scoopPista}
-              alt="Green pistachio scoop"
-              className="absolute bottom-[54%] left-1/2 z-30 w-[56%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
-              initial={{ y: -520, opacity: 0, rotate: -8, scale: 0.6 }}
-              animate={{ y: 0, opacity: 1, rotate: [0, 5, -3, 0], scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 10,
-                delay: 1.6,
-                rotate: { duration: 4.4, delay: 2.3, repeat: Infinity, ease: "easeInOut" },
-              }}
-            />
-            <Sprinkles startDelay={2.35} count={110} />
-            <HandShaker delay={2.0} scale={1.15} />
-          </div>
+          <HeroShowpiece />
         </motion.div>
       </div>
     </section>
   );
 }
 
+function HeroShowpiece({ compact = false }: { compact?: boolean }) {
+  const sizeClass = compact ? "h-[340px] w-[260px] sm:h-[390px] sm:w-[300px]" : "h-[540px] w-[400px] xl:h-[600px] xl:w-[450px]";
+  return (
+    <div className={`relative ${sizeClass} drop-shadow-[0_32px_56px_rgba(0,0,0,0.36)]`}>
+      <motion.img
+        src={coneOnly}
+        alt="Empty waffle cone"
+        className="absolute bottom-0 left-1/2 z-0 w-[70%] -translate-x-1/2"
+        initial={{ y: compact ? -25 : -40, opacity: 0, scale: 0.92 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
+      />
+      <motion.img
+        src={scoopPink}
+        alt="Pink strawberry scoop"
+        className="absolute bottom-[18%] left-1/2 z-10 w-[68%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+        initial={{ y: compact ? -320 : -400, opacity: 0, rotate: -10, scale: 0.6 }}
+        animate={{ y: 0, opacity: 1, rotate: [0, 4, -2, 0], scale: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 10,
+          delay: 0.55,
+          rotate: { duration: 3.6, delay: 1.1, repeat: Infinity, ease: "easeInOut" },
+        }}
+      />
+      <motion.img
+        src={scoopOrange}
+        alt="Orange mango scoop"
+        className="absolute bottom-[38%] left-1/2 z-20 w-[62%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+        initial={{ y: compact ? -380 : -460, opacity: 0, rotate: 10, scale: 0.6 }}
+        animate={{ y: 0, opacity: 1, rotate: [0, -4, 2, 0], scale: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 10,
+          delay: 1.0,
+          rotate: { duration: 4, delay: 1.7, repeat: Infinity, ease: "easeInOut" },
+        }}
+      />
+      <motion.img
+        src={scoopPista}
+        alt="Green pistachio scoop"
+        className="absolute bottom-[54%] left-1/2 z-30 w-[56%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+        initial={{ y: compact ? -440 : -520, opacity: 0, rotate: -8, scale: 0.6 }}
+        animate={{ y: 0, opacity: 1, rotate: [0, 5, -3, 0], scale: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 10,
+          delay: 1.45,
+          rotate: { duration: 4.4, delay: 2.2, repeat: Infinity, ease: "easeInOut" },
+        }}
+      />
+      <Sprinkles startDelay={2.3} count={compact ? 60 : 110} />
+      <HandShaker delay={2.0} scale={compact ? 0.9 : 1.15} />
+    </div>
+  );
+}
+
 function PaletteSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const panelRefs = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        if (!visible) return;
+        const index = Number((visible.target as HTMLElement).dataset.index);
+        if (!Number.isNaN(index)) setActiveIndex(index);
+      },
+      { threshold: 0.6 },
+    );
+
+    panelRefs.current.forEach((panel) => {
+      if (panel) observer.observe(panel);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const activeStory = PALETTE_STORIES[activeIndex];
+
   return (
     <section
       id="palette"
       className="relative overflow-hidden bg-[linear-gradient(135deg,#24331C_0%,#2E3E22_55%,#1A2410_100%)] py-24 md:py-32"
     >
       <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sunny/10 blur-3xl" />
-      <div className="mx-auto grid max-w-[1200px] items-center gap-14 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <span className="font-script text-3xl text-sunny">Signature experience</span>
-          <h2 className="mt-2 text-5xl leading-[0.95] text-cream md:text-7xl">
-            THE QEELO
-            <br />
-            <span className="text-sunny">PALETTE.</span>
-          </h2>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-cream/82">
-            A hand-pressed disposable tasting board with 4 wells for scoops and a center hollow for your cone.
-            This is the hero moment that makes the whole brand feel special.
-          </p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[
-              ["01", "4 scoops", "Pick a rainbow — one bite of everything."],
-              ["02", "Eco disposable", "Sturdy pressed paper, easy to hold."],
-              ["03", "Made to share", "Or don&apos;t. We won&apos;t tell."],
-            ].map(([number, title, description]) => (
-              <div key={number} className="rounded-[20px] border-t border-sunny/40 bg-white/5 p-4">
-                <div className="text-3xl font-bold text-sunny">{number}</div>
-                <div className="mt-2 text-xl font-bold text-cream">{title}</div>
-                <div className="mt-2 text-sm text-cream/70">{description}</div>
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <div className="mb-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="max-w-xl">
+            <span className="font-script text-3xl text-sunny">Signature experience</span>
+            <h2 className="mt-2 text-5xl leading-[0.95] text-cream md:text-7xl">
+              THE QEELO
+              <br />
+              <span className="text-sunny">PALETTE.</span>
+            </h2>
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-cream/82">
+              Scroll through each scoop like a film reel. Every panel shifts the mood, the color, and the hero image —
+              the same show-don&apos;t-tell energy that makes premium launches feel alive.
+            </p>
+          </div>
+          <div className="lg:sticky lg:top-28">
+            <div className="rounded-[30px] border border-cream/10 bg-black/15 p-5 backdrop-blur-md shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+              <div className="text-xs uppercase tracking-[0.3em] text-cream/55">Now featured</div>
+              <div className="mt-2 text-2xl font-bold text-cream">{activeStory.name}</div>
+              <div className="mt-1 inline-flex rounded-full bg-sunny px-3 py-1 text-xs font-bold text-ink">
+                {activeStory.note}
               </div>
-            ))}
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/75">
+                This section changes with scroll, so the site feels alive and editorial instead of static.
+              </p>
+            </div>
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 20 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative"
-        >
-          <div className="absolute -inset-6 rounded-full bg-sunny/20 blur-3xl" />
-          <motion.div
-            animate={{ rotate: [0, 1.3, 0, -1.3, 0] }}
-            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-            className="relative mx-auto max-w-2xl rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]"
-          >
-            <img
-              src={paletteIcecream}
-              alt="Qeelo palette illustration"
-              className="w-full rounded-[24px] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.32)]"
-            />
-          </motion.div>
-        </motion.div>
+        <div className="grid gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+          <div className="space-y-4 lg:sticky lg:top-32 lg:self-start">
+            {PALETTE_STORIES.map((story, index) => (
+              <button
+                key={story.name}
+                onClick={() => {
+                  panelRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }}
+                className={`w-full rounded-[24px] border px-5 py-4 text-left transition-all duration-300 ${
+                  index === activeIndex
+                    ? 'border-sunny bg-sunny/15 text-cream shadow-[0_14px_36px_rgba(0,0,0,0.24)]'
+                    : 'border-cream/10 bg-white/5 text-cream/75 hover:border-sunny/40 hover:bg-white/8'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.28em] text-cream/55">{story.note}</div>
+                    <div className="mt-1 text-xl font-bold">{story.name}</div>
+                  </div>
+                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: story.accent }} />
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div className="space-y-6">
+            {PALETTE_STORIES.map((story, index) => (
+              <motion.article
+                key={story.name}
+                ref={(element) => {
+                  panelRefs.current[index] = element;
+                }}
+                data-index={index}
+                initial={{ opacity: 0.4, y: 24, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.55 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden rounded-[36px] border border-cream/10 bg-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
+              >
+                <div
+                  className="grid min-h-[70vh] lg:grid-cols-[0.95fr_1.05fr]"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)), radial-gradient(circle at 20% 20%, ${story.glow}, transparent 40%)`,
+                  }}
+                >
+                  <div className="flex flex-col justify-between p-7 md:p-10">
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.3em] text-cream/55">{story.note}</div>
+                      <h3 className="mt-3 text-4xl leading-none text-cream md:text-6xl">{story.name}</h3>
+                      <p className="mt-6 max-w-md text-[16px] leading-relaxed text-cream/82">{story.description}</p>
+                    </div>
+                    <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                      <div className="rounded-[20px] border border-cream/10 bg-black/18 p-4">
+                        <div className="text-sm uppercase tracking-[0.24em] text-cream/50">Texture</div>
+                        <div className="mt-2 text-lg font-bold text-cream">Creamy, dense, scoopable</div>
+                      </div>
+                      <div className="rounded-[20px] border border-cream/10 bg-black/18 p-4">
+                        <div className="text-sm uppercase tracking-[0.24em] text-cream/50">Mood</div>
+                        <div className="mt-2 text-lg font-bold text-cream">Editorial, premium, playful</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative flex items-center justify-center overflow-hidden p-8">
+                    <div
+                      className="absolute inset-0 opacity-80"
+                      style={{
+                        background: `radial-gradient(circle at 50% 45%, ${story.glow}, transparent 42%)`,
+                      }}
+                    />
+                    <motion.div
+                      initial={{ y: 40, opacity: 0, scale: 0.92 }}
+                      whileInView={{ y: 0, opacity: 1, scale: 1 }}
+                      viewport={{ once: false, amount: 0.6 }}
+                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                      className="relative flex h-full w-full max-w-[420px] items-center justify-center"
+                    >
+                      <div className="absolute inset-x-8 bottom-6 h-24 rounded-full bg-black/15 blur-2xl" />
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        className="relative z-10 w-[78%] drop-shadow-[0_25px_45px_rgba(0,0,0,0.35)]"
+                      />
+                      <img
+                        src={coneOnly}
+                        alt=""
+                        aria-hidden
+                        className="absolute bottom-0 left-1/2 z-0 w-[64%] -translate-x-1/2 opacity-95"
+                      />
+                      <div className="absolute left-4 top-6 rounded-full border border-cream/10 bg-black/18 px-3 py-1 text-[11px] uppercase tracking-[0.25em] text-cream/60">
+                        Scroll to reveal
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
 function Story() {
   return (
     <section
@@ -447,7 +560,7 @@ function Marquee() {
       <div className="flex gap-16 whitespace-nowrap animate-[marquee_35s_linear_infinite]">
         {[...words, ...words, ...words].map((word, index) => (
           <span key={index} className="text-2xl font-semibold uppercase tracking-wide md:text-3xl">
-            {word} <span className="mx-4 text-coral">✦</span>
+            {word} <span className="mx-4 text-coral">âœ¦</span>
           </span>
         ))}
       </div>
@@ -470,7 +583,7 @@ function Flavors() {
             </h2>
           </div>
           <p className="max-w-sm text-[16px] text-cream/85">
-            Six signatures on rotation — and always one wild seasonal we&apos;re secretly obsessed with this week.
+            Six signatures on rotation â€” and always one wild seasonal we&apos;re secretly obsessed with this week.
           </p>
         </div>
 
@@ -576,9 +689,9 @@ function Footer() {
           <div>
             <div className="mb-3 font-bold text-cream">Contact</div>
             <p className="flex items-center gap-2 text-sm">
-              <Phone className="h-4 w-4" /> +92 300 000 0000
+              <Phone className="h-4 w-4" /> +92 337 7534199
             </p>
-            <p className="mt-1 text-sm">hello@qeelo.pk</p>
+            <p className="mt-1 text-sm">qeelocloud@gmail.com</p>
           </div>
           <div>
             <div className="mb-3 font-bold text-cream">Follow</div>
@@ -596,8 +709,8 @@ function Footer() {
           </div>
         </div>
         <div className="mt-14 flex flex-col gap-3 border-t border-cream/10 pt-6 text-xs text-cream/60 md:flex-row md:justify-between">
-          <div>© {new Date().getFullYear()} Qeelo Ice Cream. All rights reserved.</div>
-          <div>Made with 🍦 in Lahore</div>
+          <div>Â© {new Date().getFullYear()} Qeelo Ice Cream. All rights reserved.</div>
+          <div>Made with ðŸ¦ in Lahore</div>
         </div>
       </div>
     </footer>
@@ -781,3 +894,4 @@ function Sprinkles({ count = 80, startDelay = 0 }: { count?: number; startDelay?
     </div>
   );
 }
+
