@@ -1,47 +1,33 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  ArrowRight,
-  Award,
-  Clock3,
-  Facebook,
-  Instagram,
-  Leaf,
-  MapPin,
-  Menu,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-  Star,
-  X,
-  Youtube,
-} from "lucide-react";
+import { ArrowRight, Facebook, Instagram, MapPin, Menu, Phone, Youtube, X } from "lucide-react";
 
 import logoAsset from "@/assets/qeelo-logo.png.asset.json";
-const logo = logoAsset.url;
-
+import coneOnly from "@/assets/qeelo-cone-only.png";
+import handShaker from "@/assets/qeelo-hand-shaker.png";
 import paletteIcecream from "@/assets/qeelo-transparent.png";
-import storyImage from "@/assets/story.jpg";
-import galleryShop from "@/assets/gallery-shop.jpg";
-import galleryScoop from "@/assets/gallery-scoop.jpg";
-import galleryPalette from "@/assets/gallery-palette.jpg";
+import scoopOrange from "@/assets/qeelo-scoop-orange-only.png";
+import scoopPink from "@/assets/qeelo-scoop-pink-only.png";
+import scoopPista from "@/assets/qeelo-scoop-pista-only.png";
 
-import pistachio from "@/assets/flavor-pistachio.jpg";
-import rose from "@/assets/flavor-rose.jpg";
 import chocolate from "@/assets/flavor-chocolate.jpg";
 import mango from "@/assets/flavor-mango.jpg";
-import vanilla from "@/assets/flavor-vanilla.jpg";
 import matcha from "@/assets/flavor-matcha.jpg";
+import pistachio from "@/assets/flavor-pistachio.jpg";
+import rose from "@/assets/flavor-rose.jpg";
+import vanilla from "@/assets/flavor-vanilla.jpg";
+
+const logo = logoAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Qeelo Ice Cream - Lahore" },
+      { title: "Qeelo Ice Cream · Lahore" },
       {
         name: "description",
         content:
-          "Qeelo is a Lahore-born ice cream brand serving playful scoops, signature palettes, and feel-good dessert moments.",
+          "Qeelo is a Lahore-born ice cream brand with playful scoops, signature palettes, and an immersive dessert experience.",
       },
     ],
   }),
@@ -50,99 +36,31 @@ export const Route = createFileRoute("/")({
 
 const NAV = [
   { label: "Home", href: "#home" },
-  { label: "Story", href: "#story" },
-  { label: "Flavors", href: "#flavors" },
   { label: "Palette", href: "#palette" },
-  { label: "Visit", href: "#contact" },
-];
-
-const HIGHLIGHTS = [
-  { value: "Small batch", label: "Made fresh for a softer, richer scoop." },
-  { value: "Signature palette", label: "A shareable board that turns tasting into a moment." },
-  { value: "Born in Lahore", label: "Local roots, joyful design, and a warm dessert vibe." },
-];
-
-const FEATURES = [
-  {
-    icon: Leaf,
-    title: "Real ingredients",
-    text: "Fruit-forward flavors, real cream, and a cleaner finish on every spoonful.",
-  },
-  {
-    icon: Award,
-    title: "Crafted presentation",
-    text: "Designed like a dessert studio, with each scoop treated like part of the story.",
-  },
-  {
-    icon: Clock3,
-    title: "Always fresh",
-    text: "Built for same-day service, so the texture stays smooth and the flavors stay bright.",
-  },
+  { label: "How it's made?", href: "#story" },
+  { label: "Our flavors", href: "#flavors" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const FLAVORS = [
-  {
-    name: "Pistachio Kulfi",
-    img: pistachio,
-    tag: "Signature",
-    text: "Nutty, creamy, and deeply nostalgic with a modern finish.",
-  },
-  {
-    name: "Gulab Rose",
-    img: rose,
-    tag: "Local",
-    text: "Delicate rose notes balanced for a soft, floral scoop.",
-  },
-  {
-    name: "Belgian Chocolate",
-    img: chocolate,
-    tag: "Classic",
-    text: "Rich cocoa layers with a velvety, indulgent texture.",
-  },
-  {
-    name: "Chaunsa Mango",
-    img: mango,
-    tag: "Seasonal",
-    text: "Juicy and bright, like peak summer in every bite.",
-  },
-  {
-    name: "Madagascar Vanilla",
-    img: vanilla,
-    tag: "Classic",
-    text: "Simple, elegant, and the perfect base for layering.",
-  },
-  {
-    name: "Matcha Cloud",
-    img: matcha,
-    tag: "New",
-    text: "Earthy matcha with a soft, airy sweetness.",
-  },
-];
-
-const GALLERY = [
-  { title: "The shop", img: galleryShop, text: "A warm space designed for easy stops and sweet detours." },
-  { title: "Scoops up close", img: galleryScoop, text: "Texture, color, and toppings styled for pure craving appeal." },
-  { title: "Palette moment", img: galleryPalette, text: "The tasting board that turns one visit into a full experience." },
-];
-
-const LOCATIONS = [
-  { name: "MM Alam Road", city: "Lahore", status: "Now open" },
-  { name: "Packages Mall", city: "Lahore", status: "Coming soon" },
-  { name: "Emporium", city: "Lahore", status: "Coming soon" },
+  { name: "Pistachio Kulfi", img: pistachio, tag: "Signature" },
+  { name: "Gulab Rose", img: rose, tag: "Local" },
+  { name: "Belgian Chocolate", img: chocolate, tag: "Classic" },
+  { name: "Chaunsa Mango", img: mango, tag: "Seasonal" },
+  { name: "Madagascar Vanilla", img: vanilla, tag: "Classic" },
+  { name: "Matcha Cloud", img: matcha, tag: "New" },
 ];
 
 function HomePage() {
   return (
     <div id="home" className="relative min-h-screen overflow-x-hidden bg-transparent text-cream">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,196,79,0.14),transparent_28%),radial-gradient(circle_at_85%_0%,rgba(255,143,145,0.12),transparent_28%),radial-gradient(circle_at_20%_80%,rgba(182,168,255,0.08),transparent_26%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,196,79,0.18),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(255,143,145,0.13),transparent_28%)]" />
       <Navbar />
       <Hero />
-      <Marquee />
-      <FeatureStrip />
-      <Story />
-      <Flavors />
-      <GallerySection />
       <PaletteSection />
+      <Story />
+      <Marquee />
+      <Flavors />
       <Locations />
       <Footer />
     </div>
@@ -152,60 +70,48 @@ function HomePage() {
 function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border border-white/10 bg-white/10 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.18)] backdrop-blur-xl md:px-6">
-        <a href="#home" className="flex items-center gap-3 transition-transform hover:scale-[1.02]">
-          <img
-            src={logo}
-            alt="Qeelo Ice Cream"
-            className="h-12 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)] md:h-14"
-          />
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#07110ce6] backdrop-blur-xl">
+      <div className="relative mx-auto flex h-24 max-w-[1400px] items-center justify-between px-6 md:h-28 md:px-10">
+        <a href="#home" className="group flex items-center transition-transform duration-300 hover:scale-[1.03]">
+          <img src={logo} alt="Qeelo Ice Cream" className="h-16 w-auto md:h-20 lg:h-24" />
         </a>
-
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[14px] font-semibold uppercase tracking-[0.22em] text-cream/90 transition-colors hover:text-sunny"
+              className="relative text-[15px] font-semibold uppercase tracking-[0.2em] text-cream/90 transition-colors hover:text-sunny after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-sunny after:transition-all after:duration-300 hover:after:w-full"
             >
               {item.label}
             </a>
           ))}
         </nav>
-
-        <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-sunny/20 bg-sunny/15 px-5 py-2.5 text-sm font-bold text-cream transition-all hover:bg-sunny/20 hover:text-sunny"
-          >
-            Visit us <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
-
+        <a
+          href="#flavors"
+          className="hidden items-center gap-2 rounded-full border border-sunny/35 bg-sunny/15 px-6 py-3 font-bold text-cream transition-all hover:scale-[1.03] hover:bg-sunny/25 hover:text-sunny md:inline-flex"
+        >
+          Order now <ArrowRight className="h-4 w-4" />
+        </a>
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((value) => !value)}
           className="rounded-full border border-white/10 bg-white/10 p-2 text-cream lg:hidden"
           aria-label="menu"
         >
           {open ? <X /> : <Menu />}
         </button>
       </div>
-
       {open && (
-        <div className="mx-auto mt-3 max-w-[1400px] rounded-[28px] border border-white/10 bg-[#0f1712]/95 px-5 py-5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-xl lg:hidden">
-          <div className="flex flex-col gap-4">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium text-cream/90"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+        <div className="flex flex-col gap-4 border-t border-white/5 bg-[#07110cfa] px-6 py-5 lg:hidden">
+          {NAV.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className="text-lg font-medium text-cream"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
       )}
     </header>
@@ -214,344 +120,215 @@ function Navbar() {
 
 function Hero() {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 600], [0, 56]);
-  const rotate = useTransform(scrollY, [0, 600], [0, -4]);
+  const y = useTransform(scrollY, [0, 700], [0, 70]);
+  const rotate = useTransform(scrollY, [0, 700], [0, -5]);
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-[1400px] gap-14 px-4 pb-16 pt-12 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-16">
+    <section className="relative min-h-[92vh] overflow-hidden">
+      <svg
+        className="pointer-events-none absolute left-1/3 top-1/2 h-[60%] w-[60%] -translate-y-1/2 opacity-90"
+        viewBox="0 0 800 500"
+        fill="none"
+        aria-hidden
+      >
+        <path
+          d="M20 380 C 180 460, 320 250, 460 320 S 780 180, 780 60"
+          stroke="url(#g)"
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray="2 18"
+        />
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#F8C44F" />
+            <stop offset="100%" stopColor="#F8C44F" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-8 px-6 pb-14 pt-8 md:px-10 lg:grid-cols-[1.02fr_0.98fr] lg:pb-16 lg:pt-10">
         <div className="relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-sunny/20 bg-sunny/10 px-4 py-2 text-sm font-semibold text-sunny backdrop-blur">
-              <Sparkles className="h-4 w-4" />
-              Lahore's sweetest little brand experience
+            <span
+              className="mb-4 inline-block rounded-full border border-sunny/30 bg-sunny/10 px-3 py-1 text-sunny backdrop-blur"
+              style={{
+                fontFamily: '"Caveat Brush", cursive',
+                fontSize: "1.75rem",
+                lineHeight: 1.2,
+              }}
+            >
+              Hello, sweet friend
             </span>
-
-            <h1 className="mt-6 max-w-3xl text-[46px] font-bold leading-[0.92] tracking-[-0.05em] text-cream sm:text-[58px] md:text-[72px] xl:text-[86px]">
-              Crafted scoops,
+            <h1 className="text-[42px] leading-[0.92] tracking-[-0.05em] drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] sm:text-[54px] md:text-[66px] lg:text-[78px] xl:text-[90px]">
+              ICE CREAM
               <br />
-              <span className="text-sunny">editorial style.</span>
+              MADE WITH
+              <br />
+              <span className="text-sunny">PASSION</span>
             </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream/80 md:text-xl">
-              Qeelo is built like a dessert studio: bold flavors, a signature palette board, and a warm Lahore soul that makes every visit feel special.
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-cream/82 md:text-[18px]">
+              Hand-crafted in Lahore with real cream, real fruit, and a playful taste-first attitude.
+              Scroll down for the signature palette experience.
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8 }}
-            className="mt-8 flex flex-wrap items-center gap-4"
+            className="mt-8 flex flex-wrap items-center gap-4 md:mt-10"
           >
             <a
               href="#flavors"
-              className="inline-flex items-center gap-2 rounded-full bg-sunny px-7 py-4 text-sm font-bold text-ink transition-transform hover:scale-[1.02]"
+              className="rounded-full border-2 border-sunny px-8 py-4 font-bold text-cream transition-all duration-300 hover:scale-[1.02] hover:bg-sunny hover:text-ink"
             >
-              Explore flavors <ArrowRight className="h-4 w-4" />
+              Our flavors
             </a>
             <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-white/10 px-7 py-4 text-sm font-bold text-cream backdrop-blur transition-all hover:border-sunny/30 hover:bg-white/10"
+              href="#palette"
+              className="text-sunny font-semibold underline underline-offset-4 transition-colors hover:text-cream"
             >
-              Visit the shop
+              See the palette →
             </a>
           </motion.div>
 
-          <div className="mt-9 grid gap-4 sm:grid-cols-3">
-            {HIGHLIGHTS.map((item, index) => (
-              <motion.div
-                key={item.value}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 * index, duration: 0.7 }}
-                className="rounded-[24px] border border-white/10 bg-white/10 p-4 shadow-[0_16px_36px_rgba(0,0,0,0.16)] backdrop-blur"
-              >
-                <div className="text-sm uppercase tracking-[0.18em] text-sunny/80">{item.value}</div>
-                <p className="mt-2 text-sm leading-relaxed text-cream/75">{item.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <motion.div style={{ y, rotate }} className="relative mx-auto w-full max-w-[600px]">
-          <div className="absolute inset-8 rounded-[42px] bg-[radial-gradient(circle_at_50%_30%,rgba(248,196,79,0.24),transparent_35%),radial-gradient(circle_at_50%_70%,rgba(255,143,145,0.16),transparent_32%)] blur-2xl" />
-          <div className="relative rounded-[40px] border border-white/10 bg-white/10 p-4 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-            <div className="absolute left-5 top-5 rounded-full border border-sunny/20 bg-sunny/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-sunny">
-              Signature palette
-            </div>
-            <motion.img
-              src={paletteIcecream}
-              alt="Qeelo palette illustration"
-              className="w-full rounded-[30px] object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.25)]"
-              initial={{ opacity: 0, scale: 0.94, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-
-          <div className="absolute -left-2 top-20 hidden rounded-[22px] border border-white/10 bg-[#101b13]/95 p-4 shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:block">
-            <div className="flex items-center gap-3">
-              <div className="rounded-full bg-sunny p-2 text-ink">
-                <ShieldCheck className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-cream">Fresh daily</div>
-                <div className="text-xs text-cream/70">Small-batch production</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute -right-2 bottom-12 hidden rounded-[22px] border border-white/10 bg-[#101b13]/95 p-4 shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:block">
-            <div className="flex items-center gap-3">
-              <div className="rounded-full bg-sunny p-2 text-ink">
-                <Star className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-cream">Palette ready</div>
-                <div className="text-xs text-cream/70">Best for sharing</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function FeatureStrip() {
-  return (
-    <section className="relative z-10 px-4 pb-8 md:px-8">
-      <div className="mx-auto grid max-w-[1400px] gap-4 md:grid-cols-3">
-        {FEATURES.map((feature, index) => {
-          const Icon = feature.icon;
-          return (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: index * 0.08, duration: 0.7 }}
-              className="rounded-[28px] border border-white/10 bg-white/10 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.16)] backdrop-blur-xl"
-            >
-              <div className="flex items-start gap-4">
-                <div className="rounded-2xl bg-sunny p-3 text-ink">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-cream">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-cream/75">{feature.text}</p>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function Marquee() {
-  const words = [
-    "Fresh daily",
-    "Made in Lahore",
-    "Signature palette",
-    "Small batch",
-    "Real fruit",
-    "Shareable scoops",
-  ];
-
-  return (
-    <div className="overflow-hidden border-y border-sunny/20 bg-[linear-gradient(90deg,#F8C44F_0%,#FFB37A_100%)] py-4 text-ink shadow-[inset_0_-12px_24px_rgba(0,0,0,0.08)]">
-      <div className="flex whitespace-nowrap" style={{ animation: "marquee 38s linear infinite" }}>
-        {[...words, ...words, ...words].map((word, index) => (
-          <span key={`${word}-${index}`} className="px-8 text-xl font-bold uppercase tracking-[0.24em] md:text-2xl">
-            {word} <span className="mx-2 text-coral">✦</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Story() {
-  return (
-    <section id="story" className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,26,18,0.96),rgba(29,43,33,0.94))]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(248,196,79,0.14),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(255,143,145,0.08),transparent_24%)]" />
-
-      <div className="relative mx-auto grid max-w-[1400px] gap-10 px-4 md:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-          className="relative"
-        >
-          <div className="absolute -inset-6 rounded-[36px] bg-sunny/10 blur-3xl" />
-          <img
-            src={storyImage}
-            alt="Qeelo story"
-            className="relative aspect-[4/5] w-full rounded-[36px] object-cover shadow-[0_24px_70px_rgba(0,0,0,0.3)]"
-          />
-          <div className="absolute left-5 top-5 rounded-full border border-white/15 bg-[#0d170f]/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-sunny backdrop-blur">
-            Our story
-          </div>
-        </motion.div>
-
-        <div>
-          <span className="font-script text-3xl text-sunny">The short version</span>
-          <h2 className="mt-3 max-w-2xl text-4xl leading-[0.98] tracking-[-0.04em] text-cream md:text-6xl">
-            Three siblings,
-            <br />
-            one beautiful obsession.
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream/80">
-            Qeelo began in Lahore with late-night recipe experiments, too many tasting spoons, and a goal that never changed: make ice cream that feels joyful before the first bite.
-          </p>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-cream/80">
-            The palette was born from the idea that dessert should be shared, not just served. It is a compact, playful board with room for multiple moods in one sitting.
-          </p>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[
-              { value: "Real fruit", text: "Bright, clean flavor that tastes like the ingredient it came from." },
-              { value: "Creamy finish", text: "A soft, luxurious melt that stays rich without feeling heavy." },
-              { value: "Made to share", text: "The full Qeelo experience looks amazing at the table and online." },
-            ].map((item) => (
-              <div
-                key={item.value}
-                className="rounded-[24px] border border-white/10 bg-white/10 p-5 shadow-[0_16px_36px_rgba(0,0,0,0.16)] backdrop-blur-xl"
-              >
-                <div className="text-sm uppercase tracking-[0.2em] text-sunny/80">{item.value}</div>
-                <p className="mt-3 text-sm leading-relaxed text-cream/75">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Flavors() {
-  return (
-    <section id="flavors" className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(248,196,79,0.12),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,143,145,0.12),transparent_30%)]" />
-
-      <div className="relative mx-auto max-w-[1400px] px-4 md:px-8">
-        <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div>
-            <span className="font-script text-3xl text-sunny">Our flavors</span>
-            <h2 className="mt-2 text-5xl leading-[0.95] tracking-[-0.04em] text-cream md:text-7xl">
-              Pick your
-              <br />
-              <span className="text-sunny">perfect scoop.</span>
-            </h2>
-          </div>
-          <p className="max-w-xl text-base leading-relaxed text-cream/75 md:text-lg">
-            A small rotation of signature flavors, each styled to feel premium, playful, and easy to fall in love with.
-          </p>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FLAVORS.map((flavor, index) => (
-            <motion.article
-              key={flavor.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: index * 0.08, duration: 0.7 }}
-              className="group overflow-hidden rounded-[32px] border border-white/10 bg-[#f8f3ea] text-ink shadow-[0_18px_40px_rgba(0,0,0,0.16)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={flavor.img}
-                  alt={flavor.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.38),transparent_52%)]" />
-                <div className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-ink">
-                  {flavor.tag}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-2xl font-bold tracking-[-0.03em]">{flavor.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink/70">{flavor.text}</p>
-                <div className="mt-5 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-ink/70">
-                    <Star className="h-4 w-4 text-sunny" />
-                    Featured scoop
-                  </span>
-                  <button
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-sunny text-ink transition-transform group-hover:scale-105"
-                    aria-label={`Order ${flavor.name}`}
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function GallerySection() {
-  return (
-    <section className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,17,12,0.98),rgba(15,26,18,0.98))]" />
-      <div className="relative mx-auto max-w-[1400px] px-4 md:px-8">
-        <div className="mb-12 max-w-3xl">
-          <span className="font-script text-3xl text-sunny">Gallery</span>
-          <h2 className="mt-2 text-5xl leading-[0.95] tracking-[-0.04em] text-cream md:text-7xl">
-            Designed to
-            <br />
-            look delicious.
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-cream/75 md:text-lg">
-            Every corner of the experience is meant to photograph beautifully, from the shop mood to the final palette presentation.
-          </p>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.75 }}
-            className="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.2)]"
+            className="relative my-10 flex justify-center lg:hidden"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.8 }}
           >
-            <img src={galleryShop} alt="Qeelo shop" className="h-full w-full object-cover" />
+            <div className="relative h-[340px] w-[260px] drop-shadow-[0_32px_50px_rgba(0,0,0,0.36)] sm:h-[390px] sm:w-[300px]">
+              <motion.img
+                src={coneOnly}
+                alt="Empty waffle cone"
+                className="absolute bottom-0 left-1/2 z-0 w-[70%] -translate-x-1/2"
+                initial={{ y: -25, opacity: 0, scale: 0.92 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
+              />
+              <motion.img
+                src={scoopPink}
+                alt="Pink strawberry scoop"
+                className="absolute bottom-[18%] left-1/2 z-10 w-[68%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+                initial={{ y: -320, opacity: 0, rotate: -10, scale: 0.6 }}
+                animate={{ y: 0, opacity: 1, rotate: [0, 4, -2, 0], scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 10,
+                  delay: 0.55,
+                  rotate: { duration: 3.6, delay: 1.1, repeat: Infinity, ease: "easeInOut" },
+                }}
+              />
+              <motion.img
+                src={scoopOrange}
+                alt="Orange mango scoop"
+                className="absolute bottom-[38%] left-1/2 z-20 w-[62%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+                initial={{ y: -380, opacity: 0, rotate: 10, scale: 0.6 }}
+                animate={{ y: 0, opacity: 1, rotate: [0, -4, 2, 0], scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 10,
+                  delay: 1.0,
+                  rotate: { duration: 4, delay: 1.7, repeat: Infinity, ease: "easeInOut" },
+                }}
+              />
+              <motion.img
+                src={scoopPista}
+                alt="Green pistachio scoop"
+                className="absolute bottom-[54%] left-1/2 z-30 w-[56%] -translate-x-1/2 drop-shadow-[0_12px_18px_rgba(0,0,0,0.2)]"
+                initial={{ y: -440, opacity: 0, rotate: -8, scale: 0.6 }}
+                animate={{ y: 0, opacity: 1, rotate: [0, 5, -3, 0], scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 10,
+                  delay: 1.45,
+                  rotate: { duration: 4.4, delay: 2.2, repeat: Infinity, ease: "easeInOut" },
+                }}
+              />
+              <Sprinkles startDelay={2.3} count={60} />
+              <HandShaker delay={2.0} scale={0.9} />
+            </div>
           </motion.div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
-            {GALLERY.slice(1).map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: index * 0.08, duration: 0.75 }}
-                className="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.2)]"
-              >
-                <img src={item.img} alt={item.title} className="h-64 w-full object-cover md:h-72 lg:h-64" />
-                <div className="p-5">
-                  <h3 className="text-2xl font-bold text-cream">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-cream/75">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="mt-5 flex max-w-lg items-center gap-6 rounded-[28px] border border-cream/15 bg-cream/10 p-4 backdrop-blur-md shadow-[0_15px_40px_rgba(0,0,0,0.15)] lg:mt-10"
+          >
+            <div className="relative shrink-0">
+              <RotatingPalette className="h-40 w-40 md:h-48 md:w-48" />
+            </div>
+            <p className="text-[15px] leading-relaxed text-cream/90">
+              You can&apos;t buy happiness, but you can buy ice cream, and that&apos;s pretty much the same thing.
+            </p>
+          </motion.div>
         </div>
+
+        <motion.div style={{ y, rotate }} className="relative hidden justify-center lg:flex lg:justify-end">
+          <div className="relative h-[540px] w-[400px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.35)] xl:h-[600px] xl:w-[450px]">
+            <motion.img
+              src={coneOnly}
+              alt="Empty waffle cone"
+              className="absolute bottom-0 left-1/2 z-0 w-[70%] -translate-x-1/2"
+              initial={{ y: -40, opacity: 0, scale: 0.9 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
+            />
+            <motion.img
+              src={scoopPink}
+              alt="Pink strawberry scoop"
+              className="absolute bottom-[18%] left-1/2 z-10 w-[68%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
+              initial={{ y: -400, opacity: 0, rotate: -12, scale: 0.6 }}
+              animate={{ y: 0, opacity: 1, rotate: [0, 4, -2, 0], scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 10,
+                delay: 0.6,
+                rotate: { duration: 3.6, delay: 1.1, repeat: Infinity, ease: "easeInOut" },
+              }}
+            />
+            <motion.img
+              src={scoopOrange}
+              alt="Orange mango scoop"
+              className="absolute bottom-[38%] left-1/2 z-20 w-[62%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
+              initial={{ y: -460, opacity: 0, rotate: 10, scale: 0.6 }}
+              animate={{ y: 0, opacity: 1, rotate: [0, -4, 2, 0], scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 10,
+                delay: 1.1,
+                rotate: { duration: 4, delay: 1.8, repeat: Infinity, ease: "easeInOut" },
+              }}
+            />
+            <motion.img
+              src={scoopPista}
+              alt="Green pistachio scoop"
+              className="absolute bottom-[54%] left-1/2 z-30 w-[56%] -translate-x-1/2 drop-shadow-[0_12px_20px_rgba(0,0,0,0.2)]"
+              initial={{ y: -520, opacity: 0, rotate: -8, scale: 0.6 }}
+              animate={{ y: 0, opacity: 1, rotate: [0, 5, -3, 0], scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 10,
+                delay: 1.6,
+                rotate: { duration: 4.4, delay: 2.3, repeat: Infinity, ease: "easeInOut" },
+              }}
+            />
+            <Sprinkles startDelay={2.35} count={110} />
+            <HandShaker delay={2.0} scale={1.15} />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -559,63 +336,176 @@ function GallerySection() {
 
 function PaletteSection() {
   return (
-    <section id="palette" className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,#162217_0%,#253825_55%,#111b13_100%)]" />
-      <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-sunny/10 blur-3xl" />
-
-      <div className="relative mx-auto grid max-w-[1400px] gap-12 px-4 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+    <section
+      id="palette"
+      className="relative overflow-hidden bg-[linear-gradient(135deg,#24331C_0%,#2E3E22_55%,#1A2410_100%)] py-24 md:py-32"
+    >
+      <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sunny/10 blur-3xl" />
+      <div className="mx-auto grid max-w-[1200px] items-center gap-14 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <span className="font-script text-3xl text-sunny">Signature experience</span>
-          <h2 className="mt-2 text-5xl leading-[0.95] tracking-[-0.04em] text-cream md:text-7xl">
-            The Qeelo
+          <h2 className="mt-2 text-5xl leading-[0.95] text-cream md:text-7xl">
+            THE QEELO
             <br />
-            <span className="text-sunny">Palette.</span>
+            <span className="text-sunny">PALETTE.</span>
           </h2>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
-            A hand-pressed tasting board with four scoops and a cone space in the center - playful, sturdy, and built for a table moment people remember.
+          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-cream/82">
+            A hand-pressed disposable tasting board with 4 wells for scoops and a center hollow for your cone.
+            This is the hero moment that makes the whole brand feel special.
           </p>
-
-          <div className="mt-8 grid gap-4">
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
-              "Four flavors, one beautifully shareable board.",
-              "Balanced textures that keep each scoop distinct.",
-              "Made for gatherings, celebrations, and camera-ready tables.",
-            ].map((point) => (
-              <div
-                key={point}
-                className="rounded-[22px] border border-white/10 bg-white/10 px-5 py-4 text-sm leading-relaxed text-cream/80 backdrop-blur-xl"
-              >
-                {point}
+              ["01", "4 scoops", "Pick a rainbow — one bite of everything."],
+              ["02", "Eco disposable", "Sturdy pressed paper, easy to hold."],
+              ["03", "Made to share", "Or don&apos;t. We won&apos;t tell."],
+            ].map(([number, title, description]) => (
+              <div key={number} className="rounded-[20px] border-t border-sunny/40 bg-white/5 p-4">
+                <div className="text-3xl font-bold text-sunny">{number}</div>
+                <div className="mt-2 text-xl font-bold text-cream">{title}</div>
+                <div className="mt-2 text-sm text-cream/70">{description}</div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative">
-          <div className="absolute -inset-4 rounded-[36px] bg-sunny/10 blur-3xl" />
-          <div className="rounded-[36px] border border-white/10 bg-white/10 p-5 shadow-[0_18px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl">
-            <svg viewBox="0 0 560 380" className="w-full">
-              <defs>
-                <filter id="paletteShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="14" stdDeviation="14" floodOpacity="0.35" />
-                </filter>
-              </defs>
-              <path
-                d="M78 190 C 78 78, 210 26, 318 36 C 444 48, 522 122, 510 214 C 498 302, 394 336, 280 326 C 238 322, 222 294, 178 294 C 124 294, 78 268, 78 190 Z"
-                fill="#FFF7EB"
-                filter="url(#paletteShadow)"
-              />
-              <circle cx="166" cy="246" r="26" fill="#162217" />
-              {[
-                { cx: 228, cy: 136, fill: "#eeb7bf" },
-                { cx: 324, cy: 112, fill: "#c8e4a8" },
-                { cx: 412, cy: 154, fill: "#f8c44f" },
-                { cx: 362, cy: 236, fill: "#e6a477" },
-              ].map((s, index) => (
-                <circle key={index} cx={s.cx} cy={s.cy} r="46" fill={s.fill} />
-              ))}
-            </svg>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="relative"
+        >
+          <div className="absolute -inset-6 rounded-full bg-sunny/20 blur-3xl" />
+          <motion.div
+            animate={{ rotate: [0, 1.3, 0, -1.3, 0] }}
+            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+            className="relative mx-auto max-w-2xl rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]"
+          >
+            <img
+              src={paletteIcecream}
+              alt="Qeelo palette illustration"
+              className="w-full rounded-[24px] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.32)]"
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Story() {
+  return (
+    <section
+      id="story"
+      className="relative overflow-hidden bg-[linear-gradient(135deg,rgba(47,61,35,0.95),rgba(69,91,49,0.95))] py-24 md:py-32"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,209,102,0.16),transparent_26%)]" />
+      <div className="relative mx-auto grid max-w-[1200px] items-center gap-14 px-6 md:px-10 md:grid-cols-2">
+        <div>
+          <span className="font-script text-3xl text-sunny">Our story</span>
+          <h2 className="mt-3 text-4xl leading-[1] text-cream md:text-6xl">
+            Three siblings,
+            <br />
+            one <span className="text-sunny">obsession</span>.
+          </h2>
+          <p className="mt-6 text-[17px] leading-relaxed text-cream/85">
+            Qeelo was born in Lahore, from late-night kitchen experiments, far too many spoons, and a dream to serve
+            ice cream that looks as joyful as it tastes.
+          </p>
+          <p className="mt-4 text-[17px] leading-relaxed text-cream/85">
+            We built the signature Qeelo Palette so you can taste four flavors at once, because choosing just one is
+            impossible.
+          </p>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          <div className="absolute -inset-6 rounded-full bg-sunny/20 blur-3xl" />
+          <RotatingPalette className="relative mx-auto w-full max-w-md rounded-[32px] border border-cream/15 bg-cream/10 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)]" />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const words = [
+    "Fresh Daily",
+    "Made in Lahore",
+    "Small Batch",
+    "Palette Ready",
+    "Instagram Worthy",
+    "Gen Z Approved",
+  ];
+
+  return (
+    <div className="overflow-hidden border-y-4 border-sage-dark bg-[linear-gradient(90deg,#FFD166_0%,#FFB36B_100%)] py-5 text-ink shadow-[inset_0_-12px_24px_rgba(0,0,0,0.08)]">
+      <div className="flex gap-16 whitespace-nowrap animate-[marquee_35s_linear_infinite]">
+        {[...words, ...words, ...words].map((word, index) => (
+          <span key={index} className="text-2xl font-semibold uppercase tracking-wide md:text-3xl">
+            {word} <span className="mx-4 text-coral">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Flavors() {
+  return (
+    <section id="flavors" className="relative overflow-hidden bg-sage/90 py-24 md:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,107,107,0.14),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(184,161,255,0.14),transparent_30%)]" />
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+        <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <span className="font-script text-3xl text-sunny">Our flavors</span>
+            <h2 className="mt-2 text-5xl leading-[0.95] text-cream md:text-7xl">
+              PICK YOUR
+              <br />
+              <span className="text-sunny">SCOOP.</span>
+            </h2>
           </div>
+          <p className="max-w-sm text-[16px] text-cream/85">
+            Six signatures on rotation — and always one wild seasonal we&apos;re secretly obsessed with this week.
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {FLAVORS.map((flavor, index) => (
+            <motion.div
+              key={flavor.name}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: index * 0.08, duration: 0.7 }}
+              className="group overflow-hidden rounded-[32px] border border-sage-dark/10 bg-cream text-ink shadow-lift backdrop-blur-sm"
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={flavor.img}
+                  alt={flavor.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+              </div>
+              <div className="flex items-center justify-between p-6">
+                <div>
+                  <div className="text-xl font-bold">{flavor.name}</div>
+                  <div className="mt-1 text-sm text-ink/60">{flavor.tag}</div>
+                </div>
+                <button
+                  className="grid h-12 w-12 place-items-center rounded-full bg-sunny transition-all duration-300 hover:rotate-12 hover:bg-coral hover:text-cream"
+                  aria-label={`Order ${flavor.name}`}
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -623,67 +513,42 @@ function PaletteSection() {
 }
 
 function Locations() {
+  const spots = [
+    { name: "MM Alam Road", city: "Lahore", status: "Now open" },
+    { name: "Packages Mall", city: "Lahore", status: "Coming soon" },
+    { name: "Emporium", city: "Lahore", status: "Coming soon" },
+  ];
+
   return (
-    <section id="contact" className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(248,196,79,0.12),transparent_24%),radial-gradient(circle_at_0%_100%,rgba(255,143,145,0.08),transparent_24%)]" />
-      <div className="relative mx-auto max-w-[1400px] px-4 md:px-8">
-        <div className="mb-12 text-center">
+    <section id="contact" className="relative overflow-hidden bg-sage/90 py-24 md:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,209,102,0.14),transparent_24%)]" />
+      <div className="relative mx-auto max-w-[1200px] px-6 md:px-10">
+        <div className="mb-14 text-center">
           <span className="font-script text-3xl text-sunny">Find us</span>
-          <h2 className="mt-2 text-5xl leading-[0.95] tracking-[-0.04em] text-cream md:text-7xl">
-            Come say
+          <h2 className="mt-2 text-5xl leading-[0.95] text-cream md:text-7xl">
+            COME SAY
             <br />
-            <span className="text-sunny">hi.</span>
+            <span className="text-sunny">HI.</span>
           </h2>
         </div>
-
         <div className="grid gap-6 md:grid-cols-3">
-          {LOCATIONS.map((location) => (
+          {spots.map((spot) => (
             <div
-              key={location.name}
-              className="rounded-[28px] border border-white/10 bg-[#101b13]/85 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl"
+              key={spot.name}
+              className="rounded-[28px] border border-cream/10 bg-sage-deep/80 p-8 shadow-[0_12px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-sunny"
             >
               <MapPin className="h-8 w-8 text-sunny" />
-              <h3 className="mt-4 text-2xl font-bold text-cream">{location.name}</h3>
-              <p className="mt-1 text-cream/70">{location.city}</p>
+              <div className="mt-4 text-2xl font-bold text-cream">{spot.name}</div>
+              <div className="mt-1 text-cream/70">{spot.city}</div>
               <div
-                className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${
-                  location.status === "Now open"
-                    ? "bg-sunny text-ink"
-                    : "bg-white/10 text-cream/80"
+                className={`mt-5 inline-block rounded-full px-3 py-1 text-xs font-bold ${
+                  spot.status === "Now open" ? "bg-sunny text-ink" : "bg-cream/10 text-cream/80"
                 }`}
               >
-                {location.status}
+                {spot.status}
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-8 rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.16)] backdrop-blur-xl md:p-8">
-          <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-            <div>
-              <h3 className="text-3xl font-bold tracking-[-0.03em] text-cream md:text-4xl">
-                Want the quickest path to the scoop?
-              </h3>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-cream/75 md:text-base">
-                Keep this page open and use the contact details below. If you want, I can also add a WhatsApp button or directions link in the next pass.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <a
-                href="tel:+923000000000"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-sunny px-5 py-4 text-sm font-bold text-ink transition-transform hover:scale-[1.01]"
-              >
-                <Phone className="h-4 w-4" />
-                +92 300 000 0000
-              </a>
-              <a
-                href="mailto:hello@qeelo.pk"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-4 text-sm font-bold text-cream transition-all hover:border-sunny/30 hover:bg-white/10"
-              >
-                hello@qeelo.pk
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -692,39 +557,37 @@ function Locations() {
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#070f0a] pt-16 pb-10 text-cream/84">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(248,196,79,0.12),transparent_30%)]" />
-      <div className="relative mx-auto max-w-[1400px] px-4 md:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="relative overflow-hidden bg-[linear-gradient(135deg,#1B2410_0%,#23321A_100%)] pt-20 pb-10 text-cream/85">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(255,209,102,0.12),transparent_30%)]" />
+      <div className="relative mx-auto max-w-[1200px] px-6 md:px-10">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
-            <img src={logo} alt="Qeelo Ice Cream" className="h-24 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.35)]" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/70">
-              Handmade in Lahore and served with a little bit of theatre, a little bit of joy, and a lot of cream.
-            </p>
+            <img src={logo} alt="Qeelo Ice Cream" className="h-28 w-auto" />
+            <p className="mt-4 max-w-xs text-sm">Handmade in Lahore. Served with sprinkles, always.</p>
           </div>
           <div>
-            <div className="text-sm font-bold uppercase tracking-[0.22em] text-sunny">Visit</div>
-            <p className="mt-3 text-sm leading-relaxed text-cream/70">
+            <div className="mb-3 font-bold text-cream">Visit</div>
+            <p className="text-sm">
               MM Alam Road, Gulberg III
               <br />
               Lahore, Pakistan
             </p>
           </div>
           <div>
-            <div className="text-sm font-bold uppercase tracking-[0.22em] text-sunny">Contact</div>
-            <p className="mt-3 flex items-center gap-2 text-sm text-cream/70">
+            <div className="mb-3 font-bold text-cream">Contact</div>
+            <p className="flex items-center gap-2 text-sm">
               <Phone className="h-4 w-4" /> +92 300 000 0000
             </p>
-            <p className="mt-2 text-sm text-cream/70">hello@qeelo.pk</p>
+            <p className="mt-1 text-sm">hello@qeelo.pk</p>
           </div>
           <div>
-            <div className="text-sm font-bold uppercase tracking-[0.22em] text-sunny">Follow</div>
-            <div className="mt-4 flex gap-3">
+            <div className="mb-3 font-bold text-cream">Follow</div>
+            <div className="flex gap-3">
               {[Instagram, Facebook, Youtube].map((Icon, index) => (
                 <a
                   key={index}
                   href="#"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/10 text-cream transition-colors hover:bg-sunny hover:text-ink"
+                  className="grid h-10 w-10 place-items-center rounded-full bg-cream/10 transition-colors hover:bg-sunny hover:text-ink"
                 >
                   <Icon className="h-5 w-5" />
                 </a>
@@ -732,14 +595,189 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-cream/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-cream/10 pt-6 text-xs text-cream/60 md:flex-row md:justify-between">
           <div>© {new Date().getFullYear()} Qeelo Ice Cream. All rights reserved.</div>
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-sunny" />
-            Made with joy in Lahore
-          </div>
+          <div>Made with 🍦 in Lahore</div>
         </div>
       </div>
     </footer>
+  );
+}
+
+function RotatingPalette({ className = "" }: { className?: string }) {
+  return (
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+      className={`relative flex items-center justify-center ${className}`}
+    >
+      <img
+        src={paletteIcecream}
+        alt="Qeelo palette illustration"
+        className="h-full w-full rounded-[24px] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.32)]"
+      />
+    </motion.div>
+  );
+}
+
+function HandShaker({ delay = 2, scale = 1 }: { delay?: number; scale?: number }) {
+  return (
+    <motion.img
+      src={handShaker}
+      alt=""
+      aria-hidden
+      className="pointer-events-none absolute z-50 select-none drop-shadow-[0_18px_25px_rgba(0,0,0,0.35)]"
+      style={{
+        width: `${34 * scale}%`,
+        top: "-10%",
+        left: "56%",
+        transformOrigin: "92% 8%",
+      }}
+      initial={{ x: 100, y: -180, rotate: -48, opacity: 0 }}
+      animate={{
+        x: [100, 8, 8, 8, 8, 8, 100],
+        y: [-180, -8, -8, -8, -8, -8, -180],
+        rotate: [-48, -16, -8, -14, -8, -12, -48],
+        opacity: [0, 1, 1, 1, 1, 1, 0],
+      }}
+      transition={{
+        duration: 6,
+        delay,
+        times: [0, 0.14, 0.32, 0.5, 0.68, 0.86, 1],
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatDelay: 1.4,
+      }}
+    />
+  );
+}
+
+function Sprinkles({ count = 80, startDelay = 0 }: { count?: number; startDelay?: number }) {
+  type SprinkleKind = "choco" | "pink" | "yellow" | "cream" | "sage" | "cookie" | "candy";
+
+  const palette: Record<SprinkleKind, string> = {
+    choco: "#3A1F10",
+    pink: "#F4A6C0",
+    yellow: "#F5C518",
+    cream: "#FFF6E5",
+    sage: "#A8C293",
+    cookie: "#B8814A",
+    candy: "#E85A7A",
+  };
+  const kinds: SprinkleKind[] = useMemo(
+    () => ["choco", "choco", "choco", "cookie", "cookie", "pink", "yellow", "candy", "cream", "sage"],
+    [],
+  );
+
+  const rand = (seed: number) => {
+    const x = Math.sin(seed * 999.13) * 43758.5453;
+    return x - Math.floor(x);
+  };
+
+  const gravity = 900;
+  const particles = Array.from({ length: count }, (_, index) => {
+    const kind = kinds[index % kinds.length];
+    const r1 = rand(index + 1);
+    const r2 = rand(index + 7);
+    const r3 = rand(index + 13);
+    const r4 = rand(index + 21);
+    const r5 = rand(index + 33);
+    const depth = r5;
+
+    const angle = -Math.PI * 0.15 - r1 * Math.PI * 0.7;
+    const speed = 90 + r2 * 220 + depth * 60;
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed;
+
+    const life = 1.6 + r3 * 0.9;
+    const samples = [0, 0.2, 0.45, 0.75, 1];
+    const xs = samples.map((t) => vx * t * life);
+    const ys = samples.map((t) => vy * t * life + 0.5 * gravity * (t * life) ** 2);
+    const bounceY = ys[4] - 12 - r4 * 10;
+    const restY = ys[4] + 6;
+
+    const size =
+      kind === "choco" ? 5 + r2 * 4 : kind === "cookie" ? 4 + r3 * 5 : 3 + r4 * 3;
+    const long = kind === "pink" || kind === "yellow" || kind === "candy";
+    const width = long ? size * 0.7 : size;
+    const height = long ? size * 2.6 : size;
+    const rotate0 = r1 * 360;
+    const rotateEnd = rotate0 + (r2 - 0.5) * 1440;
+    const cycle = 3.4 + r3 * 0.4;
+    const delay = startDelay + rand(index + 55) * 0.35;
+
+    return {
+      index,
+      kind,
+      xs,
+      ys,
+      bounceY,
+      restY,
+      width,
+      height,
+      rotate0,
+      rotateEnd,
+      cycle,
+      delay,
+      depth,
+    };
+  });
+
+  return (
+    <div className="pointer-events-none absolute inset-0 z-40" style={{ perspective: 600 }}>
+      {particles.map((particle) => {
+        const bg = palette[particle.kind];
+        const isRound = particle.kind === "cream" || particle.kind === "sage";
+        const radius = particle.kind === "choco" ? 1.5 : particle.kind === "cookie" ? 2 : isRound ? 999 : 999;
+        const scale = 0.7 + particle.depth * 0.6;
+        const opacityPeak = 0.55 + particle.depth * 0.45;
+
+        return (
+          <motion.span
+            key={particle.index}
+            className="absolute block will-change-transform"
+            style={{
+              left: "50%",
+              top: "18%",
+              width: particle.width,
+              height: particle.height,
+              borderRadius: radius,
+              background: bg,
+              boxShadow:
+                particle.kind === "choco"
+                  ? "0 1px 2px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15)"
+                  : particle.kind === "cookie"
+                    ? "0 1px 2px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25)"
+                    : "0 1px 2px rgba(0,0,0,0.18)",
+              filter: particle.depth < 0.25 ? "blur(0.4px)" : undefined,
+              transform: `scale(${scale})`,
+            }}
+            initial={{ x: 0, y: 0, opacity: 0, rotate: particle.rotate0 }}
+            animate={{
+              x: [...particle.xs, particle.xs[4], particle.xs[4]],
+              y: [...particle.ys, particle.bounceY, particle.restY],
+              opacity: [0, opacityPeak, opacityPeak, opacityPeak, opacityPeak * 0.9, opacityPeak * 0.5, 0],
+              rotate: [
+                particle.rotate0,
+                particle.rotateEnd * 0.4,
+                particle.rotateEnd * 0.75,
+                particle.rotateEnd,
+                particle.rotateEnd,
+                particle.rotateEnd + 8,
+                particle.rotateEnd + 12,
+              ],
+            }}
+            transition={{
+              duration: 2.1,
+              delay: particle.delay,
+              times: [0, 0.08, 0.32, 0.6, 0.82, 0.9, 1],
+              ease: [0.22, 0.61, 0.36, 1],
+              repeat: Infinity,
+              repeatDelay: particle.cycle,
+            }}
+          />
+        );
+      })}
+    </div>
   );
 }
