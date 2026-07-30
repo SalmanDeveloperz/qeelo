@@ -19,7 +19,7 @@ function NotFoundComponent() {
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <div className="mt-6">
           <Link
@@ -37,6 +37,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -45,7 +46,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          This page didn&apos;t load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
@@ -77,25 +78,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Qeelo,  Ice Cream Made With Passion · Lahore" },
+      { title: "Qeelo Ice Cream - Lahore" },
       {
         name: "description",
         content:
-          "Qeelo is a playful Lahore-born ice cream brand. Big smiles, bold scoops, and our signature palette tasting board.",
+          "Qeelo is a Lahore-born ice cream brand serving playful scoops, signature palettes, and feel-good dessert moments.",
       },
       { name: "author", content: "Qeelo Ice Cream" },
-      { property: "og:title", content: "Qeelo,  Ice Cream Made With Passion · Lahore" },
+      { property: "og:title", content: "Qeelo Ice Cream - Lahore" },
       {
         property: "og:description",
-        content: "Qeelo is a playful Lahore-born ice cream brand. Big smiles, bold scoops, and our signature palette tasting board.",
+        content:
+          "Qeelo is a Lahore-born ice cream brand serving playful scoops, signature palettes, and feel-good dessert moments.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@qeelo" },
-      { name: "twitter:title", content: "Qeelo,  Ice Cream Made With Passion · Lahore" },
-      { name: "twitter:description", content: "Qeelo is a playful Lahore-born ice cream brand. Big smiles, bold scoops, and our signature palette tasting board." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/8SmYRmoDYdOnxHUl5lwGvtA20Zr2/social-images/social-1784352283850-Qeelo_Cute_Ice_Cream_Shop_Logo_updated.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/8SmYRmoDYdOnxHUl5lwGvtA20Zr2/social-images/social-1784352283850-Qeelo_Cute_Ice_Cream_Shop_Logo_updated.webp" },
+      { name: "twitter:title", content: "Qeelo Ice Cream - Lahore" },
+      {
+        name: "twitter:description",
+        content:
+          "Qeelo is a Lahore-born ice cream brand serving playful scoops, signature palettes, and feel-good dessert moments.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/8SmYRmoDYdOnxHUl5lwGvtA20Zr2/social-images/social-1784352283850-Qeelo_Cute_Ice_Cream_Shop_Logo_updated.webp",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/8SmYRmoDYdOnxHUl5lwGvtA20Zr2/social-images/social-1784352283850-Qeelo_Cute_Ice_Cream_Shop_Logo_updated.webp",
+      },
     ],
     links: [
       {
@@ -135,8 +149,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
 }
+
