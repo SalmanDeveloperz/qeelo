@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Facebook, Instagram, MapPin, Menu, Phone, Youtube, X } from "lucide-react";
 
@@ -107,8 +107,6 @@ const PALETTE_STORIES = [
       "Clean, modern, and just a little unexpected. It keeps the whole collection feeling current and premium.",
   },
 ];
-
-const CONTACT_FORM_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEB_APP_URL as string | undefined;
 
 function HomePage() {
   return (
@@ -646,188 +644,27 @@ function Locations() {
             <span className="text-sunny">HI.</span>
           </h2>
         </div>
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[32px] border border-cream/10 bg-sage-deep/80 p-6 md:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.22)]">
-            <div className="flex items-center gap-3 text-sunny">
-              <Phone className="h-5 w-5" />
-              <span className="text-sm uppercase tracking-[0.25em]">Quick connect</span>
+        <div className="grid gap-6 md:grid-cols-3">
+          {spots.map((spot) => (
+            <div
+              key={spot.name}
+              className="rounded-[28px] border border-cream/10 bg-sage-deep/80 p-8 shadow-[0_12px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-sunny"
+            >
+              <MapPin className="h-8 w-8 text-sunny" />
+              <div className="mt-4 text-2xl font-bold text-cream">{spot.name}</div>
+              <div className="mt-1 text-cream/70">{spot.city}</div>
+              <div
+                className={`mt-5 inline-block rounded-full px-3 py-1 text-xs font-bold ${
+                  spot.status === "Now open" ? "bg-sunny text-ink" : "bg-cream/10 text-cream/80"
+                }`}
+              >
+                {spot.status}
+              </div>
             </div>
-            <div className="mt-4 text-3xl font-bold text-cream">Send an order or a query</div>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-cream/75">
-              Fill the form and your message will go straight into your Google Sheet. Perfect for orders, questions,
-              and custom requests.
-            </p>
-            <ContactForm />
-          </div>
-
-          <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-3">
-              {spots.map((spot) => (
-                <div
-                  key={spot.name}
-                  className="rounded-[28px] border border-cream/10 bg-sage-deep/80 p-8 shadow-[0_12px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-sunny"
-                >
-                  <MapPin className="h-8 w-8 text-sunny" />
-                  <div className="mt-4 text-2xl font-bold text-cream">{spot.name}</div>
-                  <div className="mt-1 text-cream/70">{spot.city}</div>
-                  <div
-                    className={`mt-5 inline-block rounded-full px-3 py-1 text-xs font-bold ${
-                      spot.status === "Now open" ? "bg-sunny text-ink" : "bg-cream/10 text-cream/80"
-                    }`}
-                  >
-                    {spot.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="rounded-[28px] border border-cream/10 bg-black/15 p-6 text-sm leading-relaxed text-cream/75">
-              <div className="text-sunny font-bold text-base">What gets saved</div>
-              <ul className="mt-3 space-y-2">
-                <li>• Name</li>
-                <li>• Phone number</li>
-                <li>• Address</li>
-                <li>• Order or query text</li>
-                <li>• Timestamp</li>
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    orderQuery: "",
-  });
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
-
-  const updateField = (field: keyof typeof formData, value: string) => {
-    setFormData((current) => ({ ...current, [field]: value }));
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!CONTACT_FORM_URL) {
-      setStatus("error");
-      setMessage("Add VITE_GOOGLE_SHEETS_WEB_APP_URL in Vercel before sending.");
-      return;
-    }
-
-    setStatus("sending");
-    setMessage("Sending to your sheet...");
-
-    try {
-      const payload = new URLSearchParams({
-        timestamp: new Date().toISOString(),
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        address: formData.address.trim(),
-        orderQuery: formData.orderQuery.trim(),
-        source: "qeelo.cloud",
-      });
-
-      await fetch(CONTACT_FORM_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: payload,
-      });
-
-      setStatus("success");
-      setMessage("Sent. Your response is now in the spreadsheet.");
-      setFormData({
-        name: "",
-        phone: "",
-        address: "",
-        orderQuery: "",
-      });
-    } catch {
-      setStatus("error");
-      setMessage("Could not send right now. Please try again.");
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="block">
-          <span className="mb-2 block text-sm font-medium text-cream/80">Name</span>
-          <input
-            type="text"
-            required
-            value={formData.name}
-            onChange={(event) => updateField("name", event.target.value)}
-            className="w-full rounded-2xl border border-cream/10 bg-cream/10 px-4 py-3 text-cream outline-none transition focus:border-sunny focus:bg-cream/12"
-            placeholder="Your name"
-          />
-        </label>
-        <label className="block">
-          <span className="mb-2 block text-sm font-medium text-cream/80">Phone number</span>
-          <input
-            type="tel"
-            required
-            value={formData.phone}
-            onChange={(event) => updateField("phone", event.target.value)}
-            className="w-full rounded-2xl border border-cream/10 bg-cream/10 px-4 py-3 text-cream outline-none transition focus:border-sunny focus:bg-cream/12"
-            placeholder="+92 3XX XXXXXXX"
-          />
-        </label>
-      </div>
-
-      <label className="block">
-        <span className="mb-2 block text-sm font-medium text-cream/80">Address</span>
-        <input
-          type="text"
-          required
-          value={formData.address}
-          onChange={(event) => updateField("address", event.target.value)}
-          className="w-full rounded-2xl border border-cream/10 bg-cream/10 px-4 py-3 text-cream outline-none transition focus:border-sunny focus:bg-cream/12"
-          placeholder="Delivery address"
-        />
-      </label>
-
-      <label className="block">
-        <span className="mb-2 block text-sm font-medium text-cream/80">Order or query</span>
-        <textarea
-          required
-          rows={4}
-          value={formData.orderQuery}
-          onChange={(event) => updateField("orderQuery", event.target.value)}
-          className="w-full rounded-2xl border border-cream/10 bg-cream/10 px-4 py-3 text-cream outline-none transition focus:border-sunny focus:bg-cream/12"
-          placeholder="Tell us what you want, ask a question, or add special instructions."
-        />
-      </label>
-
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-sunny px-5 py-3 font-bold text-ink transition-all hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        {status === "sending" ? "Sending..." : "Send"}
-        <ArrowRight className="h-4 w-4" />
-      </button>
-
-      {message && (
-        <p
-          className={`rounded-2xl border px-4 py-3 text-sm ${
-            status === "success"
-              ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-100"
-              : status === "error"
-                ? "border-rose-400/30 bg-rose-400/10 text-rose-100"
-                : "border-sunny/20 bg-sunny/10 text-cream/80"
-          }`}
-        >
-          {message}
-        </p>
-      )}
-    </form>
   );
 }
 
