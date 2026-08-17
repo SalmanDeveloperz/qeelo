@@ -2,8 +2,6 @@
 
 An editorial, interactive web application for **Qeelo Ice Cream**, a boutique handmade ice cream brand based in Lahore, Pakistan. Built with modern Web technologies, the site highlights artisanal flavors, a multi-scoop signature palette experience, and physical store locations.
 
-![Qeelo Ice Cream](public/og-image.png)
-
 ---
 
 ## 🌟 Features
